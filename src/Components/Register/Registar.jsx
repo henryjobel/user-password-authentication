@@ -1,11 +1,15 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
+import React, { useState } from 'react';
 import auth from '../../firebase.config';
 
 const Registar = () => {
+    const [erromsg,setErromsg] = useState('');
+    const [sucessmsg,setSucessmsg] = useState('')
     const handelReister = e =>{
         e.preventDefault()
         console.log('ok done')
+        setErromsg('')
+        setSucessmsg('')
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email,password);
@@ -13,11 +17,13 @@ const Registar = () => {
         .then((userCredential) => {
             const user = userCredential.user;
             console.log(user)
+            setSucessmsg('User Created Sucessfully')
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.error(errorCode,errorMessage)
+            setErromsg(errorMessage)
           });
     }
     return (
@@ -30,6 +36,12 @@ const Registar = () => {
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                         <div className="card-body">
+                            {
+                                erromsg && <p className='text-red-600'>{erromsg}</p>
+                            }
+                            {
+                                sucessmsg && <p className='text-green-500'>{sucessmsg}</p>
+                            }
                             <form onSubmit={handelReister} >
                                 <div className="form-control">
                                 <label className="label">

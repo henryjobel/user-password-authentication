@@ -8,11 +8,16 @@ const Registar = () => {
     const handelReister = e =>{
         e.preventDefault()
         console.log('ok done')
+       
         setErromsg('')
         setSucessmsg('')
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email,password);
+        if(password.length <6 ){
+            setErromsg('Password Should be at 8')
+            return;
+        }
         createUserWithEmailAndPassword(auth,email,password)
         .then((userCredential) => {
             const user = userCredential.user;
@@ -47,13 +52,13 @@ const Registar = () => {
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input type="email" placeholder="email" className="input input-bordered"  name='email'/>
+                                <input type="email" placeholder="email" className="input input-bordered"  name='email' required/>
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" placeholder="password" className="input input-bordered" name='password' />
+                                <input type="password" placeholder="password" className="input input-bordered" name='password' required />
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
